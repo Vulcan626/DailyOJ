@@ -1,0 +1,67 @@
+/*You have seen a card magic trick named "Spelling Bee". The process goes as follows:
+
+The magician first arranges 13 cards in a circle, as shown in the figure below.
+Starting from the marked position, he counts the cards clockwisely, saying "A--C--E".
+He turns the card at the "E" position, and... it is an Ace!
+Next, he takes away the Ace and continues to count the cards, saying "T--W--O".
+He turns over the card at position "O"... it is a Two!!
+He continues to do this with the rest of the cards from Three to King. :-)
+
+
+Now, how does the magician arrange the cards?
+输入
+
+Input consists of several test cases. Each case begins with an integer N (1 ≤ N ≤ 52), the number of cards to be used in the magic trick. The following N lines show the order of the turning-over of the cards and the words to be spelt. None of the words will have more than 20 characters. The format for each card is a string with two characters: first the value, and second the suit.
+
+Input ends with a test case where N=0. This test case should not be processed.
+输出
+
+For each case, your program should output the initial arrangement of the cards.
+样例输入
+
+13
+AS ACE
+2S TWO
+3S THREE
+4C FOUR
+5C FIVE
+6C SIX
+7D SEVEN
+8D EIGHT
+9D NINE
+TH TEN
+JH JACK
+QH QUEEN
+KH KING
+0
+样例输出
+
+QH 4C AS 8D KH 2S 7D 5C TH JH 3S 6C 9D*/
+
+#include<bits/stdc++.h>
+using namespace std;
+const int N=52;
+int main(){
+    int n;
+    string card[N],word[N];
+    int order[N];
+    while(cin>>n&&n){
+        for(int i=0;i<n;i++){
+            cin>>card[i]>>word[i];
+            order[i]=-1;
+        }
+        for(int i=0,j=0;i<n;i++){
+            for(int k=word[i].length();;j=(j+1)%n)
+                if(order[j]==-1&&--k==0) break;
+            order[j]=i;
+        }
+        for(int i=0;i<n;i++){
+            if(i!=0) cout<<" ";
+            cout<<card[order[i]];
+        }
+        cout<<endl;
+    }
+    return 0;
+}
+
+
