@@ -1,0 +1,55 @@
+/*
+There is a beautiful river in a small village. N rocks are arranged in a straight line numbered 1 to N from left bank to the right bank, as shown below.
+
+[Left Bank] - [Rock1] - [Rock2] - [Rock3] - [Rock4] ... [Rock n] - [Right Bank]
+
+The distance between two adjacent rocks is exactly 1 meter, while the distance between the left bank and rock 1 and the distance between Rock n and the right bank are also 1 meter.
+
+Frog Frank was about to cross the river, his neighbor Frog Funny came to him and said,
+
+'Hello, Frank. Happy Children's Day! I have a gift for you. See it? A little parcel on Rock 5.'
+
+'Oh, that's great! Thank you! I'll get it.'
+
+'Wait...This present is for smart frogs only. You can't get it by jumping to it directly.'
+
+'Oh? Then what should I do?'
+
+'Jump more times. Your first jump must be from the left bank to Rock 1, then, jump as many times as you like - no matter forward or backward, but your ith jump must cover 2*i-1 meters. What's more, once you return to the left bank or reach the right bank, the game ends, and no more jumps are allowed.'
+
+'Hmmm, not easy... let me have a think!' Answered Frog Frank, 'Should I give it a try?'
+输入
+
+The input will contain no more than 2000 test cases. Each test case contains a single line. It contains two positive integers N (2<=N<=10^6), and M (1<=M<=N), M indicates the number of the rock on which the gift is located. A test case in which N=0, M=0 will terminate the input and should not be regarded as a test case.
+输出
+
+For each test case, output a single line containing 'Let me try!' If it's possible to get to Rock m, otherwise, output a single line containing 'Don't make fun of me!'
+样例输入
+
+9 5
+12 2
+0 0
+样例输出
+
+Don't make fun of me!
+Let me try!
+*/
+
+
+#include <bits/stdc++.h>
+using namespace std;
+int n,m;
+int dfs(int sp,int i){
+    if (sp==m) return 1;
+    int l=2*i-1;
+    if (sp+l<=n&&dfs(sp+l,i+1)) return 1;
+    if (sp-l>0 &&dfs(sp-l,i+1)) return 1;
+    return 0;
+}
+int main(){
+    while(cin>>n>>m&&(n||m))
+        if(n>=49) puts("Let me try!");
+        else if(dfs(1,2)) puts("Let me try!");
+        else puts("Don't make fun of me!");
+    return 0;
+}
