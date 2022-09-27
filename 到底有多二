@@ -22,7 +22,8 @@
 81.82%
 */
 
-#
+
+#include<bits/stdc++>
 using namespace std;
 int main(){
     string s;
@@ -37,4 +38,5 @@ int main(){
     printf("%.2f%%",t*100.0/len*a);
     return 0;
 }
+
 
