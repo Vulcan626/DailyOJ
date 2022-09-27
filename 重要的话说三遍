@@ -1,0 +1,24 @@
+/*
+7-5 重要的话说三遍
+分数 5
+
+全屏浏览题目
+
+切换布局
+作者 陈越
+单位 浙江大学
+这道超级简单的题目没有任何输入。
+你只需要把这句很重要的话 —— “I'm gonna WIN!”——连续输出三遍就可以了。
+注意每遍占一行，除了每行的回车不能有任何多余字符。
+*/
+
+
+
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    for(int i=0;i<3;i++){
+        cout<<"I'm gonna WIN!"<<endl;
+    }
+    return 0;
+}
