@@ -1,0 +1,83 @@
+/*
+题目描述
+
+Given a sequence of positive integers of length n, we define a primed subsequence as a
+consecutive subsequence of length at least two that sums to a prime number greater than or equal to two.
+For example, given the sequence:
+3 5 6 3 8
+There are two primed subsequences of length 2 (5 + 6 = 11 and 3 + 8 = 11), one primed
+subsequence of length 3 (6 + 3 + 8 = 17), and one primed subsequence of length 4 (3 + 5 + 6 + 3 = 17).
+输入
+
+Input consists of a series of test cases. The first line consists of an integer t (1<t<21), the number of test cases. Each test case consists of one line. The line begins with the integer n, 0< n< 10001, followed by n non-negative numbers less than 10000 comprising the sequence. You should note that 80% of the test cases will have at most 1000 numbers in the sequence
+输出
+
+For each sequence, print the “Shortest primed subsequence is length x:”, where x is the length of the shortest primed subsequence, followed by the shortest primed subsequence, separated by spaces. If there are multiple such sequences, print the one that occurs first. If there are no such sequences, print “This sequence is anti-primed.”.
+样例输入
+
+3
+5 3 5 6 3 8
+5 6 4 5 4 12
+21 15 17 16 32 28 22 26 30 34 29 31 20 24 18 33 35 25 27 23 19 21
+样例输出
+
+Shortest primed subsequence is length 2: 5 6
+Shortest primed subsequence is length 3: 4 5 4
+This sequence is anti-primed.
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+const int N=10000;
+bool isprime[N+1];
+int prime[N/3],pcnt=0;
+void eulersieve(void){
+    memset(isprime,true,sizeof(isprime));
+    isprime[0]=isprime[1]=false;
+    for(int i=2;i<=N;i++){
+        if(isprime[i])
+            prime[pcnt++]=i;
+        for(int j=0;j<pcnt&&i*prime[j]<=N;j++){
+            isprime[i*prime[j]]=false;
+            if(i%prime[j]==0)break;
+        }
+    }
+}
+bool pjudge(int x){
+    if(x<=N) return isprime[x];
+    for (int i=0;i<pcnt;i++)
+        if(x%prime[i]==0) return false;
+    return true;
+}
+int s[N+1];
+int main(){
+    eulersieve();
+    int t,n;
+    scanf("%d",&t);
+    while(t--){
+        scanf("%d",&n);
+        s[0]=0;
+        for(int i=1;i<=n;i++){
+            scanf("%d",&s[i]);
+            s[i]+=s[i-1];
+        }
+        bool flag=false;
+        for(int i=2;i<=n;i++){
+            for(int j=1;j+i-1<=n;j++){
+                int t=s[i+j-1]-s[j-1];
+                if(pjudge(t)){
+                    flag=true;
+                    printf("Shortest primed subsequence is length %d:",i);
+                    for(int k=1;k<=i;k++)
+                        printf(" %d",s[j+k-1]-s[j+k-2]);
+                    printf("\n");
+                    break;
+                }
+            }
+            if(flag) break;
+        }
+        if(flag==false)
+            printf("This sequence is anti-primed.\n");
+    }
+    return 0;
+}
