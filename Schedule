@@ -1,0 +1,146 @@
+/*
+题目描述
+
+There are N schedules, the i-th schedule has start time si and end time ei (1 <= i <= N). There are some machines. Each two overlapping schedules cannot be performed in the same machine. For each machine the working time is defined as the difference between timeend and timestart , where time_{end} is time to turn off the machine and timestart is time to turn on the machine. We assume that the machine cannot be turned off between the timestart and the timeend. 
+Print the minimum number K of the machines for performing all schedules, and when only uses K machines, print the minimum sum of all working times.
+输入
+
+The first line contains an integer T (1 <= T <= 100), the number of test cases. Each case begins with a line containing one integer N (0 < N <= 100000). Each of the next N lines contains two integers si and ei (0<=si<ei<=1e9).
+
+输出
+
+For each test case, print the minimum possible number of machines and the minimum sum of all working times
+样例输入
+
+1
+3
+1 3
+4 6
+2 5
+样例输出
+
+2 8
+*/
+
+#include<bits/stdc++.h>
+
+
+using namespace std;
+
+
+typedef long long ll;
+
+
+struct node{
+
+
+    int flag;
+
+
+    ll time;
+
+
+}q[200010];
+
+j
+bool cmp(node x,node y){
+
+
+    if(x.time==y.time) return x.flag<y.flag;
+
+
+    return x.time<y.time;
+
+
+}
+
+
+int main(){
+
+
+    int t,n;
+
+
+    scanf("%d",&t);
+
+
+    while(t--){
+
+
+        scanf("%d",&n);
+
+
+        ll times=0;
+
+
+        int tip=1;
+
+
+        for(int i=1;i<=n;i++){
+
+
+            scanf("%lld%lld",&q[tip].time,&q[tip+1].time);
+
+
+            q[tip].flag=1;q[tip+1].flag=-1;
+
+
+            times+=q[tip+1].time-q[tip].time;
+
+
+            tip+=2;
+
+
+        }
+
+
+        sort(q+1,q+tip,cmp);
+
+
+        ll num=0;
+
+
+        stack<ll>s;
+
+
+        for(int i=1;i<tip;i++){
+
+
+            if(q[i].flag==1){
+
+
+                if(!s.empty()){
+
+
+                times+=q[i].time-s.top();
+
+
+                s.pop();
+
+
+                }
+
+
+            else num++;
+
+
+            }
+
+
+        else s.push(q[i].time);
+
+
+        }
+
+
+    printf("%lld %lld\n",num,times);
+
+
+    }
+
+
+    return 0;
+
+
+}
+
